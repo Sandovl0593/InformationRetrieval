@@ -18,4 +18,4 @@
 
 ### Objetivo del Proyecto
 
-### Indice Invertido
+## Indice Invertido
