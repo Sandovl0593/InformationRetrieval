@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 
 <div align="center">
-  <a href="https://https://github.com/Auky216/Cachimbo">
+  <a href="https://https://github.com/Sandovl0593/InformationRetrieval">
   </a>
   <h1>Information Retrieval</h1>
 </div>
