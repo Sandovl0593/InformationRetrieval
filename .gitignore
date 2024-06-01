@@ -1,0 +1,13 @@
+*/__pycache__/
+*/.pytest_cache/
+*/.vscode/
+
+*/node_modules
+*/package-lock.json
+
+*/dist
+libs/*/.exe
+libs/*/.out
+
+env
+venv
