@@ -5,20 +5,128 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vite App</title>
+  <title>Retrieval</title>
 </head>
 
 <body>
   <div id="app">
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="public/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <h1>Consultame</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
+    <!-- <div>Information</div> -->
+    <h1>GUI Multimedia Database</h1>
+    <div id="general">
+      <div class="side">
+        <label for="inp-consulta">
+          Ingresa consulta
+        </label>
+        <textarea type="text" name="Ingresa consulta" id="inp-consulta" wrap="hard"></textarea>
+      </div>
+      <div class="side">
+        <label for="inp-topK">
+          Top K: <span id="topK-value">25</span>
+        </label>
+        <input type="range" name="topK" id="inp-topK" min="0" max="50" step="5" />
+        <label for="inp-tecnica">
+          Tecnica
+        </label>
+        <select name="tecnica" id="inp-tecnica">
+          <option value="Manual">Manual</option>
+          <option value="PostgreSQL">PostgreSQL</option>
+          <option value="MongoDB">MongoDB</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div id="box-table">
+      <table>
+        <thead></thead>
+        <tbody></tbody>
+      </table>
     </div>
   </div>
-  <script type="module" src="/main.js"></script>
+  <script>
+    const $ = (selector) => document.querySelector(selector);
+
+    function setupTopK() {
+      const topKValue = $("#topK-value");
+      const inpTopK = $("#inp-topK");
+      inpTopK.addEventListener("input", () => {
+        topKValue.innerHTML = inpTopK.value;
+      });
+    }
+
+    setupTopK();
+
+  </script>
 </body>
+
+<style>
+  :root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+
+  }
+
+  textarea {
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    width: 100%;
+    field-sizing: content;
+  }
+
+  #general {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+  }
+
+  .side {
+    display: flex;
+    width: 300px;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  body {
+    margin: 0;
+    display: flex;
+    /* place-items: center; */
+    min-width: 320px;
+    min-height: 100vh;
+  }
+
+  #app {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+  }
+
+
+
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      color: #213547;
+      background-color: #ffffff;
+    }
+
+    a:hover {
+      color: #747bff;
+    }
+
+    button {
+      background-color: #f9f9f9;
+    }
+  }
+</style>
 
 </html>

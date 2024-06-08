@@ -12,4 +12,4 @@ def index():
         print("No saved! bacause:\n", e)
         
     finally:
-        return response
+        return render_template('index.html')
