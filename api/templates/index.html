@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <title>Retrieval</title>
+</head>
+
+<body>
+  <script src="{{ url_for('static', filename='index.js') }}" type="text/javascript"></script>
+  <div id="app">
+    <!-- <div>Information</div> -->
+    <h1>GUI Multimedia Database</h1>
+    <div id="general">
+      <div class="side">
+        <label for="inp-consulta">
+          Ingresa consulta
+        </label>
+        <textarea type="text" name="Ingresa consulta" id="inp-consulta" wrap="hard"></textarea>
+        <button onclick="fetchLines()">Consultar</button>
+      </div>
+      <div class="side">
+        <label for="inp-topK">
+          Top K: <span id="topK-value">25</span>
+        </label>
+        <input type="range" name="topK" id="inp-topK" min="0" max="50" step="5" />
+        <label for="inp-tecnica">
+          Técnica
+        </label>
+        <select name="tecnica" id="inp-tecnica">
+          <option value="Manual">Manual</option>
+          <option value="PostgreSQL">PostgreSQL</option>
+          <option value="MongoDB">MongoDB</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div id="box-table">
+
+      <table>
+        <thead>
+          <th>Track id</th>
+          <th>Track name</th>
+          <th>Track artist</th>
+          <th>Lyrics</th>
+          <th>Track popularity</th>
+          <th>Track album id</th>
+          <th>Track album name</th>
+          <th>Track album release date</th>
+          <th>Playlist name</th>
+          <th>Playlist id</th>
+          <th>Playlist genre</th>
+          <th>Playlist subgenre</th>
+          <th>Danceability</th>
+          <th>Energy</th>
+          <th>Key</th>
+          <th>Loudness</th>
+          <th>Mode</th>
+          <th>Speechiness</th>
+          <th>Acousticness</th>
+          <th>Instrumentalness</th>
+          <th>Liveness</th>
+          <th>Valence</th>
+          <th>Tempo</th>
+          <th>Duration (ms)</th>
+          <th>Language</th>
+        </thead>
+        <tbody>
+          <tr></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+
+</html>
