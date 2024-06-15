@@ -17,8 +17,8 @@ class TextPreprocessor:
         self.stemmer = SnowballStemmer('spanish')
 
     def concatenate_fields(self):
-        # Concatenar campos textuales en un solo texto por fila
-        self.data['text'] = self.data.apply(lambda row: ' '.join([
+        # Concatenar campos textuales en un solo texto por fila usando "@" como separador
+        self.data['text'] = self.data.apply(lambda row: ' @ '.join([
             str(row['track_name']),
             str(row['track_artist']),
             str(row['lyrics']),
@@ -49,14 +49,14 @@ class TextPreprocessor:
         return self.data
 
     def save_processed_data(self, output_filepath):
-        # Guardar el DataFrame procesado en un nuevo archivo CSV
-        self.data.to_csv(output_filepath, index=False)
+        # Guardar el DataFrame procesado en un nuevo archivo CSV usando "@" como delimitador
+        self.data.to_csv(output_filepath, sep='@', index=False)
 
 
 preprocessor = TextPreprocessor('spotify_songs.csv')
 processed_data = preprocessor.preprocess()
 
-# Guardar el DataFrame procesado en un nuevo archivo CSV
+# Guardar el DataFrame procesado en un nuevo archivo CSV usando "@" como delimitador
 preprocessor.save_processed_data('spotify_songs_procesado.csv')
 
 # Mostrando algunas filas del DataFrame procesado
