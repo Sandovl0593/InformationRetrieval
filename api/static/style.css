@@ -19,6 +19,55 @@ textarea {
   field-sizing: content;
 }
 
+.modal {
+  display: none;
+  position: fixed;
+  transition: 0.3s;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #242424;
+  transition: 0.3s;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  height: 10em;
+  overflow-y: scroll;
+}
+
+#modal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(65, 206, 65);
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#modal-text {
+  margin-top: 1rem;
+}
+
+
 #general {
   width: 100%;
   display: flex;
@@ -42,7 +91,6 @@ textarea {
 }
 
 button {
-  padding: 0.5rem 1rem;
   border: none;
   width: 100%;
   border-radius: 0.25rem;
@@ -61,7 +109,7 @@ table {
 
 table th,
 table td {
-  padding: 8px;
+  padding: 6px;
   border: 1px solid #ccc;
 }
 
@@ -71,11 +119,11 @@ table th {
 }
 
 table tr:nth-child(even) {
-  background-color: #213547;
+  background-color: #1e2932;
 }
 
 table tr:hover {
-  background-color: #213547;
+  background-color: #101e2a;
 }
 
 body {

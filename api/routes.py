@@ -1,5 +1,8 @@
 from api import app
 from flask import render_template, jsonify, request
+from libs.invertedIndex import InvertedIndex
+
+indexfile = InvertedIndex("index_spotify_songs.json")
 
 @app.get('/')
 def index():
@@ -10,33 +13,32 @@ def index():
 @app.get('/api/query')
 def inverted_index():
     # asumiento que son array de tokens en una query
-    tokens = request.args.get('tokens')
+    query = request.args.get('query')
+    k = request.args.get('topK')
 
     with open("spotify_songs_procesado.csv", encoding="utf-8", mode="r") as csv_file:
-        lines = csv_file.readlines()[1:]
+        lines = csv_file.readlines()
+        size = len(lines[0].split("@")) - 4
 
-        with open("inverted_index.txt", "r") as file:
-            # get csv lines from inverted index file in format "token : index1,index2,..." per line
-            lines_index = file.readlines()
-            div = [line.split(':') for line in lines_index]
-            # create dictionary mapping token to index
-            inverted_index = {x[0]: x[1].split(",") for x in div}
+        # create index from csv only list of celds of position 3 (lyrics)
+        # indexfile.ensure_index([line.split("@")[3] for line in lines[1:]])
+        result = indexfile.retrieval(query, k)
         
         # send each row coindicent with index from inverted index filtered by token from params
-        indexes, getLines = [], {}
-        for token in tokens:
-            index_line = inverted_index[token]
-            for index in index_line:
-                if int(index) not in indexes:
-                    indexes.append(index)
+        indexes = []
+        for doc_id, _ in result:
+            if int(doc_id) not in indexes:
+                indexes.append(doc_id)
     
-        getLines = [lines[int(index)] for index in indexes]
+        getLines = [lines[int(index)].split("@")[:size] for index in indexes]
     return jsonify(getLines)
 
 @app.get('/api/csv')
 def csv():
     with open("./dataset/spotify_songs_reduced.csv", encoding="utf-8", mode="r") as csv_file:
-        lines = csv_file.readlines()[1:]
-        split_lines = [el.split(",") for el in lines]
+        lines = csv_file.readlines()
+        size = len(lines[0].split("@")) - 4
+
+        split_lines = [el.split("@")[:size] for el in lines[1:]]
    
     return jsonify(split_lines)

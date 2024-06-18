@@ -26,7 +26,21 @@ async function fetchLines() {
         const buttonLyrics = document.createElement("button");
         buttonLyrics.textContent = "Mostrar letra";
         buttonLyrics.addEventListener("click", () => {
-          alert(line[key]);
+          const modal = $(".modal");
+          const title = $("#modal-title");
+          const modalText = $("#modal-text");
+          modalText.textContent = line[key];
+          title.textContent = line[1];
+          modal.style.display = "block";
+          const span = $(".close");
+          span.onclick = function () {
+            modal.style.display = "none";
+          };
+          window.onclick = function (event) {
+            if (event.target == modal) {
+              modal.style.display = "none";
+            }
+          };
         });
         td.appendChild(buttonLyrics);
       }

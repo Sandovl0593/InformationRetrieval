@@ -43,9 +43,9 @@ class TextPreprocessor:
 
     def preprocess(self):
         self.concatenate_fields()
-        self.data['tokens'] = self.data['text'].apply(self.tokenize)
-        self.data['filtered_tokens'] = self.data['tokens'].apply(self.filter_stopwords)
-        self.data['stemmed_tokens'] = self.data['filtered_tokens'].apply(self.stem_words)
+        # self.data['tokens'] = self.data['text'].apply(self.tokenize)
+        # self.data['filtered_tokens'] = self.data['tokens'].apply(self.filter_stopwords)
+        # self.data['stemmed_tokens'] = self.data['filtered_tokens'].apply(self.stem_words)
         return self.data
 
     def save_processed_data(self, output_filepath):

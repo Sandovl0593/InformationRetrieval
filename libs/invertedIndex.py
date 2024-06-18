@@ -139,36 +139,36 @@ class InvertedIndex:
         result = sorted(score.items(), key=lambda x: x[1], reverse=True)
         return result[:k]
 
-# Conjunto de datos de prueba
-documents = [
-    "the cat in the hat",
-    "the quick brown fox",
-    "jumps over the lazy dog",
-    "the fox is quick and the dog is lazy",
-    "the dog is not lazy but the fox is quick"
-]
+# # Conjunto de datos de prueba
+# documents = [
+#     "the cat in the hat",
+#     "the quick brown fox",
+#     "jumps over the lazy dog",
+#     "the fox is quick and the dog is lazy",
+#     "the dog is not lazy but the fox is quick"
+# ]
 
-# Crear una instancia del índice invertido
-index = InvertedIndex("test_index.json")
+# # Crear una instancia del índice invertido
+# index = InvertedIndex("test_index.json")
 
-# Asegurar la construcción del índice
-index.ensure_index(documents)
+# # Asegurar la construcción del índice
+# index.ensure_index(documents)
 
-# Iniciar la interfaz de consulta
-def query_interface(index):
-    while True:
-        query = input("Ingrese su consulta (o 'salir' para terminar): ")
-        if query.lower() == 'salir':
-            break
-        start_time = time.time()
-        results = index.retrieval(query, 3)
-        end_time = time.time()
-        print(f"Tiempo de respuesta: {end_time - start_time} segundos")
-        print("Resultados:")
-        for doc_id, score in results:
-            print(f"Documento ID: {doc_id}, Score: {score}")
+# # Iniciar la interfaz de consulta
+# def query_interface(index):
+#     while True:
+#         query = input("Ingrese su consulta (o 'salir' para terminar): ")
+#         if query.lower() == 'salir':
+#             break
+#         start_time = time.time()
+#         results = index.retrieval(query, 3)
+#         end_time = time.time()
+#         print(f"Tiempo de respuesta: {end_time - start_time} segundos")
+#         print("Resultados:")
+#         for doc_id, score in results:
+#             print(f"Documento ID: {doc_id}, Score: {score}")
 
-query_interface(index)
+# query_interface(index)
 
 
 
