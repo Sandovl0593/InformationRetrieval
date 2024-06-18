@@ -16,6 +16,10 @@ class TextPreprocessor:
         self.stop_words = set(stopwords.words('spanish'))
         self.stemmer = SnowballStemmer('spanish')
 
+    def clean_lyrics(self):
+        # Eliminar comas de la columna 'lyrics'
+        self.data['lyrics'] = self.data['lyrics'].apply(lambda x: str(x).replace(',', ''))
+
     def concatenate_fields(self):
         # Concatenar campos textuales en un solo texto por fila usando "@" como separador
         self.data['text'] = self.data.apply(lambda row: ' @ '.join([
@@ -42,10 +46,11 @@ class TextPreprocessor:
         return [self.stemmer.stem(word) for word in tokens]
 
     def preprocess(self):
+        self.clean_lyrics()
         self.concatenate_fields()
-        # self.data['tokens'] = self.data['text'].apply(self.tokenize)
-        # self.data['filtered_tokens'] = self.data['tokens'].apply(self.filter_stopwords)
-        # self.data['stemmed_tokens'] = self.data['filtered_tokens'].apply(self.stem_words)
+        self.data['tokens'] = self.data['text'].apply(self.tokenize)
+        self.data['filtered_tokens'] = self.data['tokens'].apply(self.filter_stopwords)
+        self.data['stemmed_tokens'] = self.data['filtered_tokens'].apply(self.stem_words)
         return self.data
 
     def save_processed_data(self, output_filepath):
