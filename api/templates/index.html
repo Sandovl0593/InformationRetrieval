@@ -31,9 +31,9 @@
           Técnica
         </label>
         <select name="tecnica" id="inp-tecnica">
-          <option value="Manual">Manual</option>
-          <option value="PostgreSQL">PostgreSQL</option>
-          <option value="MongoDB">MongoDB</option>
+          <option value="manual">Manual</option>
+          <option value="postgres">PostgreSQL</option>
+          <option value="mongodb">MongoDB</option>
         </select>
       </div>
 
@@ -43,36 +43,21 @@
 
       <table>
         <thead>
-          <th>Track id</th>
-          <th>Track name</th>
-          <th>Track artist</th>
-          <th>Lyrics</th>
-          <th>Track popularity</th>
-          <th>Track album id</th>
-          <th>Track album name</th>
-          <th>Track album release date</th>
-          <th>Playlist name</th>
-          <th>Playlist id</th>
-          <th>Playlist genre</th>
-          <th>Playlist subgenre</th>
-          <th>Danceability</th>
-          <th>Energy</th>
-          <th>Key</th>
-          <th>Loudness</th>
-          <th>Mode</th>
-          <th>Speechiness</th>
-          <th>Acousticness</th>
-          <th>Instrumentalness</th>
-          <th>Liveness</th>
-          <th>Valence</th>
-          <th>Tempo</th>
-          <th>Duration (ms)</th>
-          <th>Language</th>
         </thead>
         <tbody>
-          <tr></tr>
         </tbody>
       </table>
+    </div>
+
+    <!-- Modal de espera cuando carga la tabla -->
+    <div class="modal-load">
+      <div class="modal-content">
+        <span id="modal-load">
+          <!-- una imagen girando  -->
+          <img src="{{ url_for('static', filename='loading.gif') }}" alt="loading" />
+          <p id="modal-text-load">Cargando ...</p>
+        </span>
+      </div>
     </div>
 
     <div class="modal">
@@ -83,6 +68,18 @@
       </div>
     </div>
   </div>
+
+  <script type="module">
+    const $ = (selector) => document.querySelector(selector);
+    function setupTopK() {
+      const topKValue = $("#topK-value");
+      const inpTopK = $("#inp-topK");
+      inpTopK.addEventListener("input", () => {
+        topKValue.textContent = inpTopK.value;
+      });
+    }
+    setupTopK();
+  </script>
 </body>
 
 </html>

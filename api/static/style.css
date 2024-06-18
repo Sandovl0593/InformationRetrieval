@@ -5,12 +5,11 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
 }
 
 textarea {
   font-family: inherit;
-  font-size: 1rem;
+  font-size: 0.85rem;
   line-height: 1.5;
   padding: 0.5rem;
   border: 1px solid #ccc;
@@ -19,7 +18,7 @@ textarea {
   field-sizing: content;
 }
 
-.modal {
+.modal, .modal-load {
   display: none;
   position: fixed;
   transition: 0.3s;
@@ -32,14 +31,26 @@ textarea {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal-content {
+.modal .modal-content {
+  border: 1px solid #888;
   background-color: #242424;
+  height: 10em;
+}
+
+.modal-load .modal-content {
+  background-color: transparent;
+  height: fit-content;
+  
+  img {
+    filter: drop-shadow(0 0 0.75rem white);
+  }
+}
+
+.modal-content {
   transition: 0.3s;
   margin: 15% auto;
   padding: 20px;
-  border: 1px solid #888;
   width: 80%;
-  height: 10em;
   overflow-y: scroll;
 }
 
@@ -63,10 +74,15 @@ textarea {
   cursor: pointer;
 }
 
-#modal-text {
+#modal-text, #modal-text-load {
   margin-top: 1rem;
 }
 
+#modal-text-load {
+  color: rgb(65, 206, 65);
+  font-size: 20px;
+  filter: drop-shadow(0 0 0.75rem white);
+}
 
 #general {
   width: 100%;
@@ -94,6 +110,7 @@ button {
   border: none;
   width: 100%;
   border-radius: 0.25rem;
+  padding: 0.4rem 1rem;
   background-color: #213547;
   color: white;
   cursor: pointer;
@@ -109,7 +126,7 @@ table {
 
 table th,
 table td {
-  padding: 6px;
+  padding: 10px;
   border: 1px solid #ccc;
 }
 
@@ -126,6 +143,11 @@ table tr:hover {
   background-color: #101e2a;
 }
 
+thead {
+  background-color: rgb(48, 61, 48);
+  color: white;
+}
+
 body {
   margin: 0;
   display: flex;
@@ -139,13 +161,6 @@ body {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
 }
 
 /* hidden scrollbar */
