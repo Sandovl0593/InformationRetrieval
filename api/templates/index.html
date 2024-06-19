@@ -22,7 +22,7 @@
         <textarea type="text" name="Ingresa consulta" id="inp-consulta" wrap="hard"></textarea>
         <button onclick="fetchLines()">Consultar</button>
       </div>
-      <div class="side">
+      <div class="side sec-side">
         <label for="inp-topK">
           Top K: <span id="topK-value">25</span>
         </label>
@@ -33,8 +33,17 @@
         <select name="tecnica" id="inp-tecnica">
           <option value="manual">Manual</option>
           <option value="postgres">PostgreSQL</option>
-          <option value="mongodb">MongoDB</option>
         </select>
+        <label for="inp-rows">
+          Cantidad de datos
+        </label>
+        <div id="select-rows">
+          <input type="radio" name="inp-rows" value="1000">1000
+          <input type="radio" name="inp-rows" value="5000">5000
+          <input type="radio" name="inp-rows" value="10000">10000
+          <input type="radio" name="inp-rows" value="15000">15000
+          <input type="radio" name="inp-rows" value="all">Todos
+        </div>
       </div>
     </div>
 

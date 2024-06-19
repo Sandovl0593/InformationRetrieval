@@ -60,7 +60,7 @@ function createHeader() {
 // fetch lines from the server and display a row for each one
 function fetchLines() {
   const consulta = $id("inp-consulta").value;
-  if (!consulta) return;
+  if (!consulta) return; // empty query -> do nothing
 
   displayLoadingModal();
   const tecnica = $id("inp-tecnica").value;
@@ -70,6 +70,7 @@ function fetchLines() {
     body: JSON.stringify({
       query: consulta,
       topK: $id("inp-topK").value,
+      rows: $('input[name="inp-rows"]:checked').value
     }),
   })
   .then((response) => response.json())

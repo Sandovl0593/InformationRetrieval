@@ -1,3 +1,4 @@
+import random as rd
 import pandas as pd
 
 class TextExtractor:
@@ -6,7 +7,7 @@ class TextExtractor:
 
     def extract_text_column(self, output_filepath, num_rows=None):
         # Leer el archivo CSV procesado
-        data = pd.read_csv(self.input_filepath, sep='@')
+        data = pd.read_csv(self.input_filepath, sep='@', encoding='utf-8')
 
         # Extraer la columna 'text'
         text_data = data[['text']]
@@ -28,6 +29,19 @@ extractor = TextExtractor(input_filepath)
 #print(f"La columna 'text' completa ha sido extraída y guardada en {output_filepath_full}")
 
 # Para generar un archivo con solo las 3 primeras filas de text:
-output_filepath_sample = 'text_3filas.csv'
-extractor.extract_text_column(output_filepath_sample, num_rows=3)
-print(f"Las primeras 3 filas de la columna 'text' han sido extraídas y guardadas en {output_filepath_sample}")
+output_filepath_sample = 'document_songs.csv'
+extractor.extract_text_column(output_filepath_sample)
+
+print(f"Las filas la columna 'text' han sido extraídas y guardadas en {output_filepath_sample}")
+
+with open(output_filepath_sample, encoding="utf-8", mode="r") as f:
+    # select N random rows
+    content = f.readlines()[1:]
+
+for i in [1000, 5000, 10000, 15000]:
+    sampled_data = rd.sample(content, i)
+    sampled_df = pd.DataFrame(sampled_data, columns=['text'])
+    output_filepath = f'songs_reduced_{i}.csv'
+    sampled_df.to_csv(output_filepath, index=False, sep='@', encoding='utf-8')
+
+print("Archivos generados en distintos tamaños de filas.")

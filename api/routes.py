@@ -15,6 +15,7 @@ def index():
 def inverted_index():
     # from json request get query and topK
     query = request.json["query"]
+    rows = request.json["rows"]
 
     with open("./dataset/spotify_songs_procesado.csv", encoding="utf-8", mode="r") as csv_file:
         lines = csv_file.readlines()
@@ -23,13 +24,13 @@ def inverted_index():
     # else:
     k = int(request.json["topK"])
 
-    with open("./dataset/text_3filas.csv") as resume_file:
+    path = f"./dataset/songs_reduced_{rows}.csv" if rows != "all" else f"./dataset/document_songs.csv"
+    with open(path) as resume_file:
         resume_lines = resume_file.readlines()
     
-    # por ahora los lyrics no estan preprocesados
     getLyrics = [line.split(" @ ")[2] for line in resume_lines[1:]]
 
-    indexfile.ensure_index(getLyrics)   
+    indexfile.ensure_index(getLyrics)
     start = time.time()
     result = indexfile.retrieval(query, k)
     end = time.time()
@@ -51,6 +52,7 @@ def postgres():
     # from json request get query and topK
     query = request.json["query"]
     k = request.json["topK"]
+    rows = request.json["rows"]
 
     conn = ps.connect(
         # connection configuration
