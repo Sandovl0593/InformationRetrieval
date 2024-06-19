@@ -4,9 +4,6 @@ const $id = (id) => document.getElementById(id);
 
 function displayLoadingModal() {
   const modal = $(".modal-load");
-  // setTimeout(() => {
-  //   modal.style.display = "block";
-  // }, 1000);
   modal.style.display = "block";
 }
 
@@ -14,6 +11,21 @@ function hideLoadingModal() {
   const modal = $(".modal-load");
   modal.style.display = "none";
 }
+
+function displayForm() {
+  const general = $("#general");
+  general.style.display = "flex";
+  const box_atras = $("#box-atras");
+  box_atras.style.display = "none";
+}
+
+function hideForm() {
+  const general = $("#general");
+  general.style.display = "none";
+  const box_atras = $("#box-atras");
+  box_atras.style.display = "flex";
+}
+
 
 function loadLyrics(line, key) {
   const modal = $(".modal");
@@ -47,9 +59,12 @@ function createHeader() {
 
 // fetch lines from the server and display a row for each one
 function fetchLines() {
-  displayLoadingModal();
   const consulta = $id("inp-consulta").value;
+  if (!consulta) return;
+
+  displayLoadingModal();
   const tecnica = $id("inp-tecnica").value;
+
   fetch(`/api/query/${tecnica}`, {
     method: "POST", headers: { "Content-Type": "application/json",},
     body: JSON.stringify({
@@ -60,11 +75,11 @@ function fetchLines() {
   .then((response) => response.json())
   .then(json => {
     hideLoadingModal();
-    const tbody = $("tbody");
     createHeader();
-    json.forEach((line) => {
+    const tbody = $("tbody");
+    json.result.forEach((line) => {
       const tr = document.createElement("tr");
-      for (const key in line.result) {
+      for (const key in line) {
         const td = document.createElement("td");
         if (key !== "3") {
           td.textContent = line[key];
@@ -78,5 +93,18 @@ function fetchLines() {
       }
       tbody.appendChild(tr);
     });
+    hideForm();
   })
+}
+
+function restart() {
+  displayForm();
+  // reset table
+  const table = $("table");
+  table.innerHTML = `
+    <thead>
+    </thead>
+    <tbody>
+    </tbody>
+  `
 }

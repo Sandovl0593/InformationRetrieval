@@ -20,37 +20,31 @@ def inverted_index():
         lines = csv_file.readlines()
         size = len(lines[0].split("@")) - 4
 
-    if not query:
-        split_lines = [el.split("@")[:size] for el in lines[1:]]
-        return jsonify({
-            "result": split_lines,
-            # "time": (end - start) * 1000
-        })
-    else:
-        k = int(request.json["topK"])
-        print(query, k)
+    # else:
+    k = int(request.json["topK"])
 
-        with open("./dataset/text_3filas.csv") as resume_file:
-            resume_lines = resume_file.readlines()
-        
-        # por ahora los lyrics no estan preprocesados
-        getLyrics = [line.split(" @ ")[2] for line in resume_lines[1:]]
-
-        indexfile.ensure_index(getLyrics)
-        start = time.time()
-        result = indexfile.retrieval(query, k)
-        end = time.time()
-
-        indexes = []
-        for doc_id, _ in result:
-            if int(doc_id) not in indexes:
-                indexes.append(doc_id)
+    with open("./dataset/text_3filas.csv") as resume_file:
+        resume_lines = resume_file.readlines()
     
-        getLines = [lines[int(index)].split("@")[:size] for index in indexes]
-        return jsonify({
-            "result": getLines,
-            "time": (end - start) * 1000
-        })
+    # por ahora los lyrics no estan preprocesados
+    getLyrics = [line.split(" @ ")[2] for line in resume_lines[1:]]
+
+    indexfile.ensure_index(getLyrics)   
+    start = time.time()
+    result = indexfile.retrieval(query, k)
+    end = time.time()
+
+    indexes = []
+    for doc_id, _ in result:
+        if int(doc_id) not in indexes:
+            indexes.append(doc_id)
+
+    getLines = [lines[int(index)].split("@")[:size] for index in indexes]
+
+    return jsonify({
+        "result": getLines,
+        "time": (end - start) * 1000
+    })
 
 @app.post('/api/query/postgres')
 def postgres():
