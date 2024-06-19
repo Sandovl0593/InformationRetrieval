@@ -139,10 +139,6 @@ table tr:nth-child(even) {
   background-color: #1e2932;
 }
 
-table tr:hover {
-  background-color: #101e2a;
-}
-
 thead {
   background-color: rgb(48, 61, 48);
   color: white;

@@ -61,11 +61,10 @@ function fetchLines() {
   .then(json => {
     hideLoadingModal();
     const tbody = $("tbody");
-    tbody.innerHTML = "";
     createHeader();
     json.forEach((line) => {
       const tr = document.createElement("tr");
-      for (const key in line) {
+      for (const key in line.result) {
         const td = document.createElement("td");
         if (key !== "3") {
           td.textContent = line[key];
