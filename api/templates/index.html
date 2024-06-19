@@ -38,7 +38,7 @@
           Cantidad de datos
         </label>
         <div id="select-rows">
-          <input type="radio" name="inp-rows" value="1000">1000
+          <input type="radio" name="inp-rows" value="1000" checked>1000
           <input type="radio" name="inp-rows" value="5000">5000
           <input type="radio" name="inp-rows" value="10000">10000
           <input type="radio" name="inp-rows" value="15000">15000
@@ -48,8 +48,9 @@
     </div>
 
     <div id="box-atras">
+      <div>Búsqueda con: <span id="s-consulta"></span></div>
       <div>
-        Tiempo optenido <span id="duration-time"></span>
+        Ejecutado en: <span id="duration-time"></span>
       </div>
       <button onclick="restart()"> ← Ir atrás</button>
     </div>

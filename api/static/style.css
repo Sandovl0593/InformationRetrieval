@@ -28,6 +28,7 @@ textarea {
   min-height: 65px;
   height: 100%;
   field-sizing: content;
+  resize: none;
 }
 
 label {

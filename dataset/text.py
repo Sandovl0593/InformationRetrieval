@@ -36,9 +36,9 @@ print(f"Las filas la columna 'text' han sido extraídas y guardadas en {output_f
 
 with open(output_filepath_sample, encoding="utf-8", mode="r") as f:
     # select N random rows
-    content = f.readlines()[1:]
+    content = [line[1:-1] for line in f.readlines()[1:]]
 
-for i in [1000, 5000, 10000, 15000]:
+for i in [500, 1000, 5000, 10000, 15000]:
     sampled_data = rd.sample(content, i)
     sampled_df = pd.DataFrame(sampled_data, columns=['text'])
     output_filepath = f'songs_reduced_{i}.csv'

@@ -4,7 +4,7 @@ from libs.invertedIndex import InvertedIndex
 import psycopg2 as ps
 import time
 
-indexfile = InvertedIndex("index_spotify_songs.json")
+indexfile = InvertedIndex("index_songs.json")
 
 @app.get('/')
 def index():
@@ -21,16 +21,18 @@ def inverted_index():
         lines = csv_file.readlines()
         size = len(lines[0].split("@")) - 4
 
-    # else:
     k = int(request.json["topK"])
 
     path = f"./dataset/songs_reduced_{rows}.csv" if rows != "all" else f"./dataset/document_songs.csv"
-    with open(path) as resume_file:
+    with open(path, encoding="utf-8", mode="r") as resume_file:
         resume_lines = resume_file.readlines()
     
+    print(query, rows, k)
+    # print(len(resume_lines[1:]))
+    # print(resume_lines[1].split(" @ ")[2])
     getLyrics = [line.split(" @ ")[2] for line in resume_lines[1:]]
 
-    indexfile.ensure_index(getLyrics)
+    indexfile.build_index(getLyrics)
     start = time.time()
     result = indexfile.retrieval(query, k)
     end = time.time()
@@ -44,7 +46,7 @@ def inverted_index():
 
     return jsonify({
         "result": getLines,
-        "time": (end - start) * 1000
+        "time": round((end - start) * 1000, 4)
     })
 
 @app.post('/api/query/postgres')
@@ -74,5 +76,5 @@ def postgres():
 
     return jsonify({
         "result": result,
-        "time": (end - start) * 1000
+        "time": round((end - start) * 1000, 4)
     })

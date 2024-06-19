@@ -97,6 +97,8 @@ function fetchLines() {
     hideForm();
     const durationTime = $id("duration-time");
     durationTime.textContent = json.time + " ms";
+    const sConsulta = $id("s-consulta");
+    sConsulta.textContent = consulta;
   })
 }
 
