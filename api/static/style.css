@@ -84,6 +84,11 @@ button {
 #box-atras {
   display: none;
   justify-content: center;
+  gap: 2rem;
+
+  span {
+    font-size: 1.5rem;
+  }
 
   button {
     width: 100px;

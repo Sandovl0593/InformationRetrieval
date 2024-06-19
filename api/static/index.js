@@ -95,6 +95,8 @@ function fetchLines() {
       tbody.appendChild(tr);
     });
     hideForm();
+    const durationTime = $id("duration-time");
+    durationTime.textContent = json.time + " ms";
   })
 }
 
