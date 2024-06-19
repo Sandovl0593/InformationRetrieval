@@ -3,6 +3,7 @@ from flask import render_template, jsonify, request
 from libs.invertedIndex import InvertedIndex
 import psycopg2 as ps
 import time
+import os
 
 indexfile = InvertedIndex("index_songs.json")
 
@@ -32,7 +33,11 @@ def inverted_index():
     # print(resume_lines[1].split(" @ ")[2])
     getLyrics = [line.split(" @ ")[2] for line in resume_lines[1:]]
 
-    indexfile.build_index(getLyrics)
+    if os.path.exists("index_songs.json"):
+        indexfile.load_index()
+    else:
+        indexfile.build_index(getLyrics)
+
     start = time.time()
     result = indexfile.retrieval(query, k)
     end = time.time()
