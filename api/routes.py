@@ -24,18 +24,14 @@ def inverted_index():
 
     k = int(request.json["topK"])
 
-    path = f"./dataset/songs_reduced_{rows}.csv" if rows != "all" else f"./dataset/document_songs.csv"
-    with open(path, encoding="utf-8", mode="r") as resume_file:
-        resume_lines = resume_file.readlines()
-    
-    print(query, rows, k)
-    # print(len(resume_lines[1:]))
-    # print(resume_lines[1].split(" @ ")[2])
-    getLyrics = [line.split(" @ ")[2] for line in resume_lines[1:]]
-
     if os.path.exists("index_songs.json"):
         indexfile.load_index()
     else:
+        path = f"./dataset/songs_reduced_{rows}.csv" if rows != "all" else f"./dataset/document_songs.csv"
+        with open(path, encoding="utf-8", mode="r") as resume_file:
+            resume_lines = resume_file.readlines()
+
+        getLyrics = [line.split(" @ ")[2] for line in resume_lines[1:]]
         indexfile.build_index(getLyrics)
 
     start = time.time()
