@@ -166,3 +166,84 @@ Consultas Repetidas: Cuando ejecutas la misma consulta varias veces, PostgreSQL 
 ## Conclusiones
 
 En resumen para la experimentacion con PostgreSQL, los resultados indican que es una opción robusta para implementar sistemas de recuperación de información basados en texto, proporcionando buen rendimiento y escalabilidad. Sin embargo, siempre es importante monitorear y ajustar según las cargas de trabajo y requisitos específicos del proyecto para garantizar un rendimiento óptimo a largo plazo.
+
+
+## Pasos para ejecutar el proyecto:
+
+Sigue estos pasos para configurar y ejecutar correctamente el proyecto.
+
+### 1. Preparación inicial
+
+#### 1.1. Clona el repositorio
+
+Primero, clona el repositorio desde GitHub:
+
+```
+git clone https://github.com/tu-usuario/tu-proyecto.git
+cd tu-proyecto
+```
+### 2. Configuración del entorno virtual y dependencias
+#### 2.1. Crea un entorno virtual
+Crea un entorno virtual para aislar las dependencias del proyecto:
+```
+python -m venv venv
+```
+#### 2.2. Activa el entorno virtual
+En Windows, activa el entorno virtual con:
+
+```
+venv\Scripts\activate
+```
+
+En macOS/Linux, usa:
+
+```
+source venv/bin/activate
+```
+
+#### 2.3. Instala las dependencias
+Instala las dependencias necesarias desde el archivo "requirements.txt":
+
+```
+pip install -r requirements.txt
+```
+
+### 3. Descarga y preparación del dataset
+
+#### 3.1. Descarga el dataset desde Kaggle
+
+Descarga el dataset [spotify_songs.csv](https://www.kaggle.com/datasets/imuhammad/audio-features-and-lyrics-of-spotify-songs?select=spotify_songs.csv) de la plataforma Kaggle.
+
+
+Asegúrate de colocar el archivo descargado spotify_songs.csv en la carpeta "dataset" de tu proyecto.
+
+### 4. Ejecución de scripts de preparación de datos
+#### 4.1. Ejecuta el script de preprocesamiento de texto
+Primero, ejecuta el script textpreprocessor.py en la carpeta dataset para procesar los datos:
+
+```
+python dataset/textpreprocessor.py
+```
+#### 4.2. Ejecuta el script principal para generar archivos reducidos
+Luego, ejecuta el script text.py en la carpeta dataset para generar archivos reducidos:
+
+```
+python dataset/text.py
+```
+### 5. Iniciar el servidor Flask
+#### 5.1. Configura el entorno Flask
+Asegúrate de que el archivo .flaskenv tenga las siguientes líneas:
+
+```
+FLASK_APP=server.py
+FLASK_DEBUG=1
+```
+
+#### 5.2. Ejecuta el servidor Flask
+Finalmente, inicia el servidor Flask ejecutando el siguiente comando:
+
+```
+flask run
+```
+
+Esto iniciará el servidor correctamente y te proporcionará el enlace donde podrás acceder e interactuar con el proyecto.
