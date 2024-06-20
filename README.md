@@ -191,13 +191,15 @@ Optimización de Consultas: La utilización de índices GIN en la columna tsvect
 
 Consultas Repetidas: Cuando ejecutas la misma consulta varias veces, PostgreSQL puede aprovechar la caché para devolver resultados más rápidamente en las ejecuciones posteriores. Esto puede hacer que los tiempos de respuesta aparenten ser más rápidos de lo que serían en condiciones de caché vacía.
 
-### MyIndex VS PostgreSQL
-![Pantalla de Inicio](images/graficaaaaa.jpg)
-Inicialmente, ambas técnicas tienen tiempos de ejecución similares. Sin embargo, a medida que aumenta la cantidad de datos, la técnica del Índice Invertido que hemos implementado empieza a mostrar una mejora significativa en comparación con PostgreSQL, especialmente en rangos de datos entre 1000 y 10,000. En este intervalo, se observa una clara ventaja en los tiempos de nuestro Índice Invertido. Aunque al final los tiempos totales van parecidas o muy cercanos entre sí, podemos concluir que el Índice Invertido es más eficiente en conjuntos de datos relativamente grandes. No obstante, cuando la cantidad de datos sigue creciendo, nuestro índice muestra un aumento y llega a un pico en los tiempos de ejecución alrededor de los 15,000 datos. Finalmente, al llegar a cantidades de datos aún mayores, como el "TOTAL" mostrado en la gráfica, los tiempos de ejecución del Índice Invertido se regulan y vuelven a disminuir, demostrando una mejora en comparación con el pico observado anteriormente y presentando inclusive en ese momento en el que se tiende al "TOTAL" de datos, un mejor tiempo en comparación al de PostgreSQL.
-
 ## Conclusiones
 
 En resumen para la experimentacion con PostgreSQL, los resultados indican que es una opción robusta para implementar sistemas de recuperación de información basados en texto, proporcionando buen rendimiento y escalabilidad. Sin embargo, siempre es importante monitorear y ajustar según las cargas de trabajo y requisitos específicos del proyecto para garantizar un rendimiento óptimo a largo plazo.
+
+
+
+### MyIndex VS PostgreSQL
+![Pantalla de Inicio](images/graficaaaaa.jpg)
+Inicialmente, ambas técnicas tienen tiempos de ejecución similares. Sin embargo, a medida que aumenta la cantidad de datos, la técnica del Índice Invertido que hemos implementado empieza a mostrar una mejora significativa en comparación con PostgreSQL, especialmente en rangos de datos entre 1000 y 10,000. En este intervalo, se observa una clara ventaja en los tiempos de nuestro Índice Invertido. Aunque al final los tiempos totales van parecidas o muy cercanos entre sí, podemos concluir que el Índice Invertido es más eficiente en conjuntos de datos relativamente grandes. No obstante, cuando la cantidad de datos sigue creciendo, nuestro índice muestra un aumento y llega a un pico en los tiempos de ejecución alrededor de los 15,000 datos. Finalmente, al llegar a cantidades de datos aún mayores, como el "TOTAL" mostrado en la gráfica, los tiempos de ejecución del Índice Invertido se regulan y vuelven a disminuir, demostrando una mejora en comparación con el pico observado anteriormente y presentando inclusive en ese momento en el que se tiende al "TOTAL" de datos, un mejor tiempo en comparación al de PostgreSQL.
 
 
 ## Pasos para ejecutar el proyecto:
