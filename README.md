@@ -173,8 +173,11 @@ Como podemos observar, al implementar la tecnica Manual (MyIndex) el tiempo de e
 ### Implementación propia
 
 ### PostgreSQL
-#### Grafica Obtenida:
+#### Graficas Obtenidas:
 ![Pantalla de Inicio](images/1.png)
+
+![Pantalla de Inicio](images/graficaaaaa.jpg)
+
 Basado en los resultados de la experimentación con PostgreSQL para la búsqueda del término "Toxica" en diferentes tamaños de bases de datos (1000, 5000, 10000, 15000 registros y todos los registros disponibles), podemos obtener las siguientes conclusiones:
 
 Rendimiento Consistente: En general, los tiempos de ejecución se mantienen relativamente estables a medida que aumenta el tamaño de la base de datos. Esto sugiere que PostgreSQL maneja eficientemente las consultas de búsqueda de texto completo utilizando índices GIN y funciones de similitud como ts_rank_cd.
