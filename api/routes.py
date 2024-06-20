@@ -31,7 +31,7 @@ def inverted_index():
         with open(path, encoding="utf-8", mode="r") as resume_file:
             resume_lines = resume_file.readlines()
 
-        getLyrics = [line.split(" @ ")[2] for line in resume_lines[1:]]
+        getLyrics = [' '.join(line.split(" @ ")) for line in resume_lines[1:]]
         indexfile.build_index(getLyrics)
 
     start = time.time()
