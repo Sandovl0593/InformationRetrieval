@@ -39,8 +39,7 @@ with open(output_filepath_sample, encoding="utf-8", mode="r") as f:
     content = [line[1:-1] for line in f.readlines()[1:]]
 
 for i in [500, 1000, 5000, 10000, 15000]:
-    sampled_data = rd.sample(content, i)
-    sampled_df = pd.DataFrame(sampled_data, columns=['text'])
+    sampled_df = pd.DataFrame(content[:i+1], columns=['text'])
     output_filepath = f'songs_reduced_{i}.csv'
     sampled_df.to_csv(output_filepath, index=False, sep='@', encoding='utf-8')
 

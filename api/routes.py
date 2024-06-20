@@ -31,7 +31,7 @@ def inverted_index():
         with open(path, encoding="utf-8", mode="r") as resume_file:
             resume_lines = resume_file.readlines()
 
-        getLyrics = [line.split(" @ ")[2] for line in resume_lines[1:]]
+        getLyrics = [' '.join(line.split(" @ ")) for line in resume_lines[1:]]
         indexfile.build_index(getLyrics)
 
     start = time.time()
@@ -41,9 +41,9 @@ def inverted_index():
     indexes = []
     for doc_id, _ in result:
         if int(doc_id) not in indexes:
-            indexes.append(doc_id)
+            indexes.append(int(doc_id))
 
-    getLines = [lines[int(index)].split("@")[:size] for index in indexes]
+    getLines = [lines[index].split("@")[:size] for index in indexes]
 
     return jsonify({
         "result": getLines,
