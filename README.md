@@ -67,5 +67,16 @@ ORDER BY rank DESC;
 ### Implementación propia
 
 ### PostgreSQL
+Basado en los resultados de la experimentación con PostgreSQL para la búsqueda del término "Toxica" en diferentes tamaños de bases de datos (1000, 5000, 10000, 15000 registros y todos los registros disponibles), podemos obtener las siguientes conclusiones:
+
+Rendimiento Consistente: En general, los tiempos de ejecución se mantienen relativamente estables a medida que aumenta el tamaño de la base de datos. Esto sugiere que PostgreSQL maneja eficientemente las consultas de búsqueda de texto completo utilizando índices GIN y funciones de similitud como ts_rank_cd.
+
+Escalabilidad: El sistema muestra una buena escalabilidad, ya que no se observa un aumento significativo en el tiempo de ejecución a medida que se añaden más registros. Esto es una ventaja cuando se trata de manejar grandes volúmenes de datos y proporciona una experiencia de usuario consistente independientemente del tamaño de la base de datos.
+
+Optimización de Consultas: La utilización de índices GIN en la columna tsvector_col y la aplicación de la función to_tsvector para procesar los textos parecen ser efectivas para optimizar las consultas de búsqueda. Esto se refleja en los tiempos de ejecución relativamente bajos incluso para bases de datos más grandes.
+
+Consultas Repetidas: Cuando ejecutas la misma consulta varias veces, PostgreSQL puede aprovechar la caché para devolver resultados más rápidamente en las ejecuciones posteriores. Esto puede hacer que los tiempos de respuesta aparenten ser más rápidos de lo que serían en condiciones de caché vacía.
 
 ## Conclusiones
+
+En resumen para la experimentacion con PostgreSQL, los resultados indican que es una opción robusta para implementar sistemas de recuperación de información basados en texto, proporcionando buen rendimiento y escalabilidad. Sin embargo, siempre es importante monitorear y ajustar según las cargas de trabajo y requisitos específicos del proyecto para garantizar un rendimiento óptimo a largo plazo.
