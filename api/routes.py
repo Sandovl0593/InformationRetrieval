@@ -41,9 +41,9 @@ def inverted_index():
     indexes = []
     for doc_id, _ in result:
         if int(doc_id) not in indexes:
-            indexes.append(doc_id)
+            indexes.append(int(doc_id))
 
-    getLines = [lines[int(index)].split("@")[:size] for index in indexes]
+    getLines = [lines[index].split("@")[:size] for index in indexes]
 
     return jsonify({
         "result": getLines,
