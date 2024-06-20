@@ -179,8 +179,8 @@ Sigue estos pasos para configurar y ejecutar correctamente el proyecto.
 Primero, clona el repositorio desde GitHub:
 
 ```
-git clone https://github.com/tu-usuario/tu-proyecto.git
-cd tu-proyecto
+git clone https://github.com/Sandovl0593/InformationRetrieval.git
+cd InformationRetrieval
 ```
 ### 2. Configuración del entorno virtual y dependencias
 #### 2.1. Crea un entorno virtual
