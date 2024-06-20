@@ -111,9 +111,6 @@ PostgreSQL
     ```
 
 
-### Optimización con SPIMI
-
-
 ## Frontend
 
 
@@ -159,16 +156,9 @@ Como podemos observar, al implementar la tecnica Manual (MyIndex) el tiempo de e
     ![Pantalla de Inicio](images/3.png)
     ![Pantalla de Inicio](images/2.png)
 
- - Gráficos Comparativos: Incluir gráficos que muestren el rendimiento de las diferentes implementaciones en términos de tiempo de respuesta y precisión de los resultados.
-
 
 
 ## Experimentación
-
-- Tablas y gráficos de los resultados experimentales 
-
-- Análisis y discusión
-
 
 ### Implementación propia
 
