@@ -153,6 +153,7 @@ Nuestro frontend permite a los usuarios interactuar con el índice invertido y r
 ### 2) Análisis comparativo visual con otras implementaciones
 #### MyIndex Vs PostgreSQL:
 - My Index:
+Como podemos observar, al implementar la tecnica Manual (MyIndex) el tiempo de ejecución para procesar la consulta "Hola" fue de "898.0598 ms".
     ![Pantalla de Inicio](images/5.png)
     ![Pantalla de Inicio](images/4.png)
     ![Pantalla de Inicio](images/3.png)
