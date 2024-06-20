@@ -114,7 +114,6 @@ PostgreSQL
 ### Optimización con SPIMI
 
 
-<<<<<<< HEAD
 ## Frontend
 
 
