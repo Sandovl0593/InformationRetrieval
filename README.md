@@ -130,22 +130,34 @@ Nuestro frontend permite a los usuarios interactuar con el índice invertido y r
 
 - Screenshots de la GUI
     - Pantalla de Inicio:
+    
+      Al ingresar a la interfaz gráfica, se puede observar que la pantalla inicial cuenta con varios campos importantes. Estos incluyen un campo para ingresar la consulta textual que se desea buscar, una opción para seleccionar el Top K resultados, y un selector para elegir la técnica de indexación (Manual o PostgreSQL). Además, el usuario puede especificar la cantidad de datos sobre los cuales desea realizar la búsqueda, con opciones de 1000, 5000, 10000, 15000, o Todos.
 
     ![Pantalla de Inicio](images/6.png)
 
     - Resultados de Búsqueda:
-   
+     
+     Como se puede observar en la imagen a continuación, estamos buscando una canción que contenga la palabra "Hola", utilizando la técnica "Manual", con un Top K de 25 y una cantidad de datos de 1000.
+    ![Pantalla de Inicio](images/5.png)
+
+     Hemos encontrado una coincidencia para la consulta realizada con la palabra "Hola". La canción encontrada se llama "Me Enamoré" del artista "Jhay Wheeler", como se puede observar en la imagen a continuación.
+
+    ![Pantalla de Inicio](images/4.png)
+     En la siguiente imagen, podemos ver que el tiempo de ejecución de esta consulta fue de "898.0598 ms".
+
+    ![Pantalla de Inicio](images/3.png)
+     Por último, en la última imagen podemos confirmar que la letra de la canción "Me Enamoré" del artista Jhay Wheeler efectivamente contiene la palabra "Hola", tal y como se buscó.
+
+    ![Pantalla de Inicio](images/2.png)
+
+### 2) Análisis comparativo visual con otras implementaciones
+#### MyIndex Vs PostgreSQL:
+- My Index:
     ![Pantalla de Inicio](images/5.png)
     ![Pantalla de Inicio](images/4.png)
     ![Pantalla de Inicio](images/3.png)
     ![Pantalla de Inicio](images/2.png)
 
-### 2) Análisis comparativo visual con otras implementaciones
-
-En esta sección, se debe proporcionar una interfaz gráfica que permita a los usuarios comparar visualmente los resultados de búsqueda utilizando la implementación propia del índice invertido y otras implementaciones como PostgreSQL. La comparación puede incluir:
-
- - Visualización de Resultados: Mostrar los resultados de las búsquedas realizadas con diferentes métodos de indexación en una misma pantalla para que el usuario pueda comparar fácilmente.
- - Indicadores de Rendimiento: Mostrar el tiempo de búsqueda, el número de documentos recuperados, y otros indicadores de rendimiento para cada método de indexación.
  - Gráficos Comparativos: Incluir gráficos que muestren el rendimiento de las diferentes implementaciones en términos de tiempo de respuesta y precisión de los resultados.
 
 
