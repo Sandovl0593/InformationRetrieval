@@ -129,9 +129,16 @@ Nuestro frontend permite a los usuarios interactuar con el índice invertido y r
     - Selección del Método de Indexación: El usuario puede elegir entre nuestra propia implementación del índice invertido o el uso de bases de datos PostgreSQL para realizar la búsqueda.
 
 - Screenshots de la GUI
-    - Pantalla de Inicio: Muestra el campo de búsqueda y las opciones de configuración inicial.
-    - Resultados de Búsqueda: Muestra una lista de documentos recuperados, ordenados por relevancia, junto con el tiempo de búsqueda.
+    - Pantalla de Inicio:
 
+    ![Pantalla de Inicio](images/6.png)
+
+    - Resultados de Búsqueda:
+   
+    ![Pantalla de Inicio](images/5.png)
+    ![Pantalla de Inicio](images/4.png)
+    ![Pantalla de Inicio](images/3.png)
+    ![Pantalla de Inicio](images/2.png)
 
 ### 2) Análisis comparativo visual con otras implementaciones
 
@@ -153,6 +160,8 @@ En esta sección, se debe proporcionar una interfaz gráfica que permita a los u
 ### Implementación propia
 
 ### PostgreSQL
+#### Grafica Obtenida:
+![Pantalla de Inicio](images/1.png)
 Basado en los resultados de la experimentación con PostgreSQL para la búsqueda del término "Toxica" en diferentes tamaños de bases de datos (1000, 5000, 10000, 15000 registros y todos los registros disponibles), podemos obtener las siguientes conclusiones:
 
 Rendimiento Consistente: En general, los tiempos de ejecución se mantienen relativamente estables a medida que aumenta el tamaño de la base de datos. Esto sugiere que PostgreSQL maneja eficientemente las consultas de búsqueda de texto completo utilizando índices GIN y funciones de similitud como ts_rank_cd.
