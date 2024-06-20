@@ -62,10 +62,26 @@ Resumen del Proceso Completo de Preprocesamiento:
         Antes de construir el índice invertido, es importante aclarar que extragimos solo la columna relevante del dataset que contiene el texto preprocesado. Para ello, se utiliza el script test.py, el cual se encarga de generar un archivo text.csv con la columna "text". Este paso garantiza que el índice no cargue toda la data, sino únicamente la información esencial (relevante) para las búsquedas textuales.
   2) Construcción del Índice:
 
-        - Tokenización y Cálculo de TF-IDF: Cada documento es tokenizado, y se calcula el TF-IDF para cada término en el documento. Esto permite ponderar la importancia de cada término dentro de un documento y en el corpus completo.
-        
-        - Estructuración del Índice: Los términos tokenizados y sus respectivas ponderaciones TF-IDF se almacenan en una estructura de datos adecuada para consultas eficientes. Esta estructura se guarda en memoria secundaria para manejar grandes volúmenes de datos
+     1. Tokenización y Cálculo de TF-IDF
+     Cada documento es tokenizado, y se calcula el TF-IDF (Term Frequency-Inverse Document Frequency) para cada término en el documento. Este paso pondera la importancia de cada término dentro de un documento y en el corpus completo.
 
+     2. Estructuración del Índice
+     Los términos tokenizados y sus respectivas ponderaciones TF-IDF se almacenan en una estructura de datos adecuada para consultas eficientes. Esta estructura se guarda en memoria secundaria para manejar grandes volúmenes de datos.
+
+     3. Algoritmo SPIMI (Single-pass In-memory Indexing)
+     
+        El algoritmo SPIMI es utilizado para la construcción del índice invertido en bloques, permitiendo manejar grandes volúmenes de datos sin necesidad de mucha memoria.
+    
+     - Pasos del Algoritmo SPIMI:
+    
+        Procesamiento del Flujo de Tokens: Se procesa el flujo de tokens, contando la frecuencia de términos (term_freq).
+        Construcción del Diccionario: Se construye un diccionario donde cada término apunta a una lista de postings (documentos y frecuencias).
+        Escritura en Disco: Los postings se escriben a archivos temporales para manejar grandes volúmenes de datos sin sobrecargar la memoria.
+        Puntos Fuertes de SPIMI:
+        
+     - Eficiencia de Memoria: Al escribir bloques a disco, SPIMI maneja eficientemente grandes volúmenes de datos sin necesitar mucha memoria.
+     - Simplicidad: Es relativamente sencillo de implementar y entender.
+        
 - Ejecución óptima de consultas aplicando Similitud de Coseno
 
     Una vez construido el índice invertido, las consultas se ejecutan aplicando la similitud de coseno entre el vector de la consulta y los vectores de los documentos indexados. Este proceso incluye los siguientes pasos:
@@ -160,13 +176,10 @@ Como podemos observar, al implementar la tecnica Manual (MyIndex) el tiempo de e
 
 ## Experimentación
 
-### Implementación propia
-
 ### PostgreSQL
-#### Graficas Obtenidas:
+#### Grafica Obtenida:
 ![Pantalla de Inicio](images/1.png)
 
-![Pantalla de Inicio](images/graficaaaaa.jpg)
 
 Basado en los resultados de la experimentación con PostgreSQL para la búsqueda del término "Toxica" en diferentes tamaños de bases de datos (1000, 5000, 10000, 15000 registros y todos los registros disponibles), podemos obtener las siguientes conclusiones:
 
@@ -177,6 +190,10 @@ Escalabilidad: El sistema muestra una buena escalabilidad, ya que no se observa 
 Optimización de Consultas: La utilización de índices GIN en la columna tsvector_col y la aplicación de la función to_tsvector para procesar los textos parecen ser efectivas para optimizar las consultas de búsqueda. Esto se refleja en los tiempos de ejecución relativamente bajos incluso para bases de datos más grandes.
 
 Consultas Repetidas: Cuando ejecutas la misma consulta varias veces, PostgreSQL puede aprovechar la caché para devolver resultados más rápidamente en las ejecuciones posteriores. Esto puede hacer que los tiempos de respuesta aparenten ser más rápidos de lo que serían en condiciones de caché vacía.
+
+### MyIndex VS PostgreSQL
+![Pantalla de Inicio](images/graficaaaaa.jpg)
+Inicialmente, ambas técnicas tienen tiempos de ejecución similares. Sin embargo, a medida que aumenta la cantidad de datos, la técnica del Índice Invertido que hemos implementado empieza a mostrar una mejora significativa en comparación con PostgreSQL, especialmente en rangos de datos entre 1000 y 10,000. En este intervalo, se observa una clara ventaja en los tiempos de nuestro Índice Invertido. Aunque al final los tiempos totales van parecidas o muy cercanos entre sí, podemos concluir que el Índice Invertido es más eficiente en conjuntos de datos relativamente grandes. No obstante, cuando la cantidad de datos sigue creciendo, nuestro índice muestra un aumento y llega a un pico en los tiempos de ejecución alrededor de los 15,000 datos. Finalmente, al llegar a cantidades de datos aún mayores, como el "TOTAL" mostrado en la gráfica, los tiempos de ejecución del Índice Invertido se regulan y vuelven a disminuir, demostrando una mejora en comparación con el pico observado anteriormente y presentando inclusive en ese momento en el que se tiende al "TOTAL" de datos, un mejor tiempo en comparación al de PostgreSQL.
 
 ## Conclusiones
 
