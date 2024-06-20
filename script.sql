@@ -50,6 +50,6 @@ CREATE INDEX idx_tsvector ON songs USING GIN(tsvector_col);
 -- Consulta con similitud de coseno
 SELECT track_id, track_name, track_artist,
        ts_rank_cd(tsvector_col, query) AS rank
-FROM songs, to_tsquery('spanish', 'consulta de ejemplo') AS query
+FROM songs, to_tsquery('spanish', 'gola') AS query
 WHERE tsvector_col @@ query
 ORDER BY rank DESC;
