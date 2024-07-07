@@ -14,3 +14,7 @@ regex==2024.5.15
 tqdm==4.66.4
 Werkzeug==3.0.3
 pandas~=2.2.2
+matplotlib~=3.9.0
+requests~=2.32.3
+librosa~=0.10.2.post1
+spotipy~=2.24.0
