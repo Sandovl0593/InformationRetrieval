@@ -41,6 +41,7 @@ label {
   font-size: 15px;
 }
 
+/* SECCION TEXT RETREIVAL */
 #general {
   width: 850px;
   margin: 2rem auto;
@@ -69,6 +70,19 @@ label {
 
 .sec-side {
   gap: 0.8rem;
+}
+
+/* SECCION AUDIO RETREIVAL */
+#audiogeneral {
+  width: 850px;
+  margin: 2rem auto;
+  display: none;
+  color: rgb(189, 221, 189);
+  align-items: flex-start;
+  /* justify-content: center; */
+  flex-direction: row;
+  gap: 3rem;
+  padding: 1rem;
 }
 
 button {

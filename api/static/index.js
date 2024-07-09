@@ -26,7 +26,6 @@ function hideForm() {
   box_atras.style.display = "flex";
 }
 
-
 function loadLyrics(line, key) {
   const modal = $(".modal");
   const title = $("#modal-title");
@@ -47,14 +46,34 @@ function loadLyrics(line, key) {
 
 function createHeader() {
   const headers = [
-    "Track id","Track name","Track artist","Lyrics","Track popularity",
-    "Track album id","Track album name","Track album release date","Playlist name",
-    "Playlist id","Playlist genre","Playlist subgenre","Danceability","Energy","Key",
-    "Loudness","Mode","Speechiness","Acousticness","Instrumentalness","Liveness",
-    "Valence","Tempo","Duration (ms)","Language"
-  ];  
+    "Track id",
+    "Track name",
+    "Track artist",
+    "Lyrics",
+    "Track popularity",
+    "Track album id",
+    "Track album name",
+    "Track album release date",
+    "Playlist name",
+    "Playlist id",
+    "Playlist genre",
+    "Playlist subgenre",
+    "Danceability",
+    "Energy",
+    "Key",
+    "Loudness",
+    "Mode",
+    "Speechiness",
+    "Acousticness",
+    "Instrumentalness",
+    "Liveness",
+    "Valence",
+    "Tempo",
+    "Duration (ms)",
+    "Language",
+  ];
   const head = $("thead");
-  head.innerHTML = headers.map(header => `<th>${header}</th>`).join('');
+  head.innerHTML = headers.map((header) => `<th>${header}</th>`).join("");
 }
 
 // fetch lines from the server and display a row for each one
@@ -66,40 +85,43 @@ function fetchLines() {
   const tecnica = $id("inp-tecnica").value;
 
   fetch(`/api/query/${tecnica}`, {
-    method: "POST", headers: { "Content-Type": "application/json",},
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       query: consulta,
       topK: $id("inp-topK").value,
-      rows: $('input[name="inp-rows"]:checked').value
+      rows: $('input[name="inp-rows"]:checked').value,
     }),
   })
-  .then((response) => response.json())
-  .then(json => {
-    hideLoadingModal();
-    createHeader();
-    const tbody = $("tbody");
-    json.result.forEach((line) => {
-      const tr = document.createElement("tr");
-      for (const key in line) {
-        const td = document.createElement("td");
-        if (key !== "3") {
-          td.textContent = line[key];
-        } else {
-          const buttonLyrics = document.createElement("button");
-          buttonLyrics.textContent = "Mostrar letra";
-          buttonLyrics.addEventListener("click", () => {loadLyrics(line, key); });
-          td.appendChild(buttonLyrics);
+    .then((response) => response.json())
+    .then((json) => {
+      hideLoadingModal();
+      createHeader();
+      const tbody = $("tbody");
+      json.result.forEach((line) => {
+        const tr = document.createElement("tr");
+        for (const key in line) {
+          const td = document.createElement("td");
+          if (key !== "3") {
+            td.textContent = line[key];
+          } else {
+            const buttonLyrics = document.createElement("button");
+            buttonLyrics.textContent = "Mostrar letra";
+            buttonLyrics.addEventListener("click", () => {
+              loadLyrics(line, key);
+            });
+            td.appendChild(buttonLyrics);
+          }
+          tr.appendChild(td);
         }
-        tr.appendChild(td);
-      }
-      tbody.appendChild(tr);
+        tbody.appendChild(tr);
+      });
+      hideForm();
+      const durationTime = $id("duration-time");
+      durationTime.textContent = json.time + " ms";
+      const sConsulta = $id("s-consulta");
+      sConsulta.textContent = consulta;
     });
-    hideForm();
-    const durationTime = $id("duration-time");
-    durationTime.textContent = json.time + " ms";
-    const sConsulta = $id("s-consulta");
-    sConsulta.textContent = consulta;
-  })
 }
 
 function restart() {
@@ -111,5 +133,5 @@ function restart() {
     </thead>
     <tbody>
     </tbody>
-  `
+  `;
 }

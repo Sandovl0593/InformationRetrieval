@@ -14,6 +14,16 @@
   <div id="app">
     <!-- <div>Information</div> -->
     <h1>GUI Multimedia Database</h1>
+
+    <div id="box-sel-ret">
+      Tipo de recuperación
+      <div id="sel-retrieval">
+        <input type="radio" name="retrieval" value="letters-db" checked>Lestras de canciones
+        <input type="radio" name="retrieval" value="audios-api">Audios de canciones
+      </div>
+    </div>
+
+    <!-- SECCION DE TEXT RETRIEVAL -->
     <div id="general">
       <div class="side">
         <label for="inp-consulta">
@@ -64,6 +74,9 @@
       </table>
     </div>
 
+    <!-- SECCION DE AUDIO RETRIEVAL -->
+    <div id="audiogeneral">AASDFGEJKDFH</div>
+
     <!-- Modal de espera cuando carga la tabla -->
     <div class="modal-load">
       <div class="modal-content">
@@ -93,7 +106,27 @@
         topKValue.textContent = inpTopK.value;
       });
     }
+
+    function changeSection() {
+      const general = $("#general");
+      const audiogeneral = $("#audiogeneral");
+      // cuando el option cambia se muestra el div correspondiente
+      const selRetrieval = $("#sel-retrieval");
+      selRetrieval.addEventListener("change", () => {
+        const value = selRetrieval.querySelector("input:checked").value;
+        if (value === "letters-db") {
+          general.style.display = "flex";
+          audiogeneral.style.display = "none";
+        } else {
+          restart();
+          general.style.display = "none";
+          audiogeneral.style.display = "flex";
+        }
+      });
+    }
+
     setupTopK();
+    changeSection();
   </script>
 </body>
 

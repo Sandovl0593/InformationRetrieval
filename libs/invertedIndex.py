@@ -24,7 +24,7 @@ class InvertedIndex:
     def text_to_terms(self, text):
         words = word_tokenize(text.lower())
         words = [
-            self.stemmer_en.stem(word) if word not in stopwords.words('spanish') else self.stemmer_es.stem(word)
+            self.stemmer_en.stem(''.join(e for e in word if e.isalnum())) if word not in stopwords.words('spanish') else self.stemmer_es.stem(word)
             for word in words if word.isalnum() and word not in self.stop_words
         ]
         return words
