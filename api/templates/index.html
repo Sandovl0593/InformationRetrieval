@@ -16,10 +16,16 @@
     <h1>GUI Multimedia Database</h1>
 
     <div id="box-sel-ret">
-      Tipo de recuperación
+      <strong>
+        Tipo de recuperación
+      </strong>
       <div id="sel-retrieval">
-        <input type="radio" name="retrieval" value="letters-db" checked>Lestras de canciones
-        <input type="radio" name="retrieval" value="audios-api">Audios de canciones
+        <div>
+          <input type="radio" name="retrieval" value="letters-db" checked>Letras de canciones
+        </div>
+        <div>
+          <input type="radio" name="retrieval" value="audios-api">Audios de canciones
+        </div>
       </div>
     </div>
 
@@ -75,7 +81,43 @@
     </div>
 
     <!-- SECCION DE AUDIO RETRIEVAL -->
-    <div id="audiogeneral">AASDFGEJKDFH</div>
+    <div id="audiogeneral">
+      <div class="side">
+        <input type="file" name="audio-consulta" id="audio-consulta" accept="audio/*" />
+        <label for="audio-consulta">
+          Subir archivo
+        </label>
+        <br>
+        <button onclick="fetchSounds()">Consultar</button>
+      </div>
+      <div class="side sec-side">
+        <label for="audio-tecnica">
+          Técnica
+        </label>
+        <select name="tecnica" id="audio-tecnica">
+          <option value="secuencial">Secuencial</option>
+          <option value="rtree">RTree</option>
+          <option value="rtreehighd">RTreeHighD</option>
+        </select>
+        <label for="audio-modo">
+          Tipo de búsqueda
+        </label>
+        <select name="modo" id="audio-modo">
+          <option value="nearest">Canciones cercanas</option>
+          <option value="range">Rango de canciones</option>
+        </select>
+        <!-- <label for="audio-rows">
+          Cantidad de datos
+        </label>
+        <div id="select-range">
+          <input type="radio" name="audio-rows" value="1000" checked>1000
+          <input type="radio" name="audio-rows" value="5000">5000
+          <input type="radio" name="audio-rows" value="10000">10000
+          <input type="radio" name="audio-rows" value="15000">15000
+          <input type="radio" name="audio-rows" value="all">Todos
+        </div> -->
+      </div>
+    </div>
 
     <!-- Modal de espera cuando carga la tabla -->
     <div class="modal-load">
@@ -98,7 +140,6 @@
   </div>
 
   <script type="module">
-    const $ = (selector) => document.querySelector(selector);
     function setupTopK() {
       const topKValue = $("#topK-value");
       const inpTopK = $("#inp-topK");
@@ -121,6 +162,12 @@
           restart();
           general.style.display = "none";
           audiogeneral.style.display = "flex";
+          const input = $id("audio-consulta");
+          const label = $("label[for='audio-consulta']");
+          input.addEventListener("change", (e) => {
+            const fileName = e.target.files[0].name;
+            label.textContent = fileName;
+          });
         }
       });
     }

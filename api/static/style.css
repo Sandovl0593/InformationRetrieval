@@ -41,7 +41,22 @@ label {
   font-size: 15px;
 }
 
-/* SECCION TEXT RETREIVAL */
+#box-sel-ret {
+  width: 60%;
+  margin: 0 auto;
+}
+
+#sel-retrieval {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+
+#sel-retrieval div {
+  display: flex;
+  gap: 1rem;
+}
+
 #general {
   width: 850px;
   margin: 2rem auto;
@@ -72,7 +87,6 @@ label {
   gap: 0.8rem;
 }
 
-/* SECCION AUDIO RETREIVAL */
 #audiogeneral {
   width: 850px;
   margin: 2rem auto;
@@ -83,6 +97,35 @@ label {
   flex-direction: row;
   gap: 3rem;
   padding: 1rem;
+}
+
+#audio-consulta {
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+#audio-consulta + label {
+  background-color: black;
+  display: inline-block;
+  transition: 0.3s;
+  min-width: 55%;
+  width: fit-content;
+  margin: 0 auto;
+  cursor: pointer;
+  border-radius: 10px;
+  outline: 0.3px dotted #000;
+	outline: -webkit-focus-ring-color auto 2px;
+  padding: 4px;
+}
+
+#audio-consulta:focus + label,
+#audio-consulta + label:hover {
+  background-color: #41210f;
+  transition: 0.3s;
 }
 
 button {

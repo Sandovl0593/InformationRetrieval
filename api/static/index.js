@@ -20,7 +20,7 @@ function displayForm() {
 }
 
 function hideForm() {
-  const general = $("#general");
+  const general = $("#general") === null ? $("#audiogeneral") : $("#general");
   general.style.display = "none";
   const box_atras = $("#box-atras");
   box_atras.style.display = "flex";
@@ -134,4 +134,52 @@ function restart() {
     <tbody>
     </tbody>
   `;
+}
+
+function fetchSounds() {
+  const audio = $id("audio-consulta").files[0];
+  if (!audio) return; // empty query -> do nothing
+
+  displayLoadingModal();
+  const tecnica = $id("audio-tecnica").value;
+  const modo = $id("audio-modo").value;
+
+  const formData = new FormData();
+  formData.append("audio", audio);
+
+  const routes = {
+    secuencial: {
+      nearest: "/api/audio/knn/lineal",
+      range: "/api/audio/range/lineal",
+    },
+    rtree: {
+      nearest: "/api/audio/knn/rtree",
+      range: "/api/audio/range/rtree",
+    },
+  };
+  const fetchRoute =
+    tecnica === "rtreehighd"
+      ? "api/audio/knn/rtreehighd"
+      : routes[tecnica][modo];
+
+  fetch(fetchRoute, {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.blob())
+    .then((blob) => {
+      hideLoadingModal();
+      const audio = document.createElement("audio");
+      audio.controls = true;
+      audio.src = URL.createObjectURL(blob);
+      const audioDiv = $id("audio-div");
+      audioDiv.innerHTML = "";
+      audioDiv.appendChild(audio);
+
+      hideForm();
+      const durationTime = $id("duration-time");
+      durationTime.textContent = json.time + " ms";
+      const sConsulta = $id("s-consulta");
+      sConsulta.textContent = consulta;
+    });
 }
