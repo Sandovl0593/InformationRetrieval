@@ -1,7 +1,5 @@
 import numpy as np
 from heapq import heappush, heappop
-import ast  # Para una conversión segura de strings a listas
-import re
 
 # Función para calcular la distancia euclidiana
 def euclidean_distance(vector1, vector2):

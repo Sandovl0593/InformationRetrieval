@@ -1,7 +1,6 @@
 import numpy as np
 import rtree
 
-# Knn search with rtree
 def knn_rtree_search(query_vector, data, K):
     p = rtree.index.Property()
     p.dimension = query_vector.shape[0]

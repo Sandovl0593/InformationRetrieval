@@ -4,6 +4,8 @@ import time
 from libs.knnSecuencial import *
 from libs.knnRtree import *
 import pandas as pd
+import ast  # Para una conversión segura de strings a listas
+import re
 
 # Función para convertir una cadena de MFCC_Vector en un vector numpy
 def parse_mfcc_vector(mfcc_string):
