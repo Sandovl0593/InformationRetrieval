@@ -4,6 +4,7 @@ import numpy as np
 from heapq import heappush, heappop
 import ast  # Para una conversión segura de strings a listas
 import re
+import librosa
 
 # Función para convertir una cadena de MFCC_Vector en un vector numpy
 def parse_mfcc_vector(mfcc_string):
@@ -30,6 +31,13 @@ def knn_search(query_vector, data, K):
         neighbors.append(heappop(priority_queue))
     return neighbors[::-1]
 
+# Función para extraer los vectores caracteristicos (MFCC) de un archivo de audio
+def extract_features(audio_file):
+    y, sr = librosa.load(audio_file)
+    mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=20)
+    mfccs_mean = np.mean(mfccs, axis=1)
+    return mfccs_mean
+
 # Cargar datos
 df = pd.read_csv('complete_spotify_with_mfcc.csv')
 
@@ -37,7 +45,11 @@ df = pd.read_csv('complete_spotify_with_mfcc.csv')
 df['MFCC_Vector'] = df['MFCC_Vector'].apply(parse_mfcc_vector)
 
 # Vector de consulta
-query_vector = df.iloc[11391]['MFCC_Vector']
+#query_vector = df.iloc[0]['MFCC_Vector']
+
+# Vector de consulta desde un archivo de audio
+audio_file = 'downloaded_audio/_TOMMYPAMELA_PesoPlumaKeniaOS.mp3'
+query_vector = extract_features(audio_file)
 
 # Validación de las estructuras de todos los vectores MFCC
 for index, row in df.iterrows():
