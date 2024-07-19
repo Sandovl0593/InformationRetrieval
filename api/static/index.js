@@ -2,6 +2,10 @@
 const $ = (selector) => document.querySelector(selector);
 const $id = (id) => document.getElementById(id);
 
+if (!localStorage.getItem("load")) {
+  localStorage.setItem("load", "general");
+}
+
 function displayLoadingModal() {
   const modal = $(".modal-load");
   modal.style.display = "block";
@@ -13,14 +17,20 @@ function hideLoadingModal() {
 }
 
 function displayForm() {
-  const general = $("#general");
+  const general =
+    localStorage.getItem("load") === "general"
+      ? $("#general")
+      : $("#audiogeneral");
   general.style.display = "flex";
   const box_atras = $("#box-atras");
   box_atras.style.display = "none";
 }
 
 function hideForm() {
-  const general = $("#general") === null ? $("#audiogeneral") : $("#general");
+  const general =
+    localStorage.getItem("load") === "general"
+      ? $("#general")
+      : $("#audiogeneral");
   general.style.display = "none";
   const box_atras = $("#box-atras");
   box_atras.style.display = "flex";
@@ -137,7 +147,7 @@ function showTipo() {
 
 function restart() {
   showTipo();
-  displayForm();
+  // displayForm();
   // reset table
   const table = $("table");
   table.innerHTML = `
@@ -153,9 +163,8 @@ function fetchSounds() {
   const filename = audio.name;
   if (!audio) return; // empty query -> do nothing
 
-  displayLoadingModal();
-  // const tecnica = $id("audio-tecnica").value;
-  const modo = $id("audio-modo").value;
+  const tecnica = $id("audio-tecnica").value;
+  // const modo = $id("audio-modo").value;
 
   const formData = new FormData();
   formData.append("audio", audio);
@@ -164,9 +173,11 @@ function fetchSounds() {
   const routes = {
     secuencial: "/api/audio/knn/lineal",
     rtree: "/api/audio/knn/rtree",
-    highD: "api/audio/knn/rtreehighd",
+    rtreehighd: "api/audio/knn/rtreehighd",
   };
-  const fetchRoute = routes[modo];
+  const fetchRoute = routes[tecnica];
+  console.log(audio, filename, tecnica, fetchRoute);
+  displayLoadingModal();
 
   fetch(fetchRoute, {
     method: "POST",
@@ -177,6 +188,10 @@ function fetchSounds() {
       hideLoadingModal();
       const result = json.result;
       const audioList = document.getElementById("audio-list");
+      hideTipo();
+      hideForm();
+      const durationTime = $id("duration-time");
+      durationTime.textContent = json.time + " ms";
 
       result.forEach((item) => {
         const audioContainer = document.createElement("div");
@@ -193,11 +208,5 @@ function fetchSounds() {
         // audioContainer.appendChild(audioElement);
         audioList.appendChild(audioContainer);
       });
-      hideTipo();
-      hideForm();
-      const durationTime = $id("duration-time");
-      durationTime.textContent = json.time + " ms";
-      const sConsulta = $id("s-consulta");
-      sConsulta.textContent = consulta;
     });
 }

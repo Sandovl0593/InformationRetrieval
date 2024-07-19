@@ -20,6 +20,7 @@ def knn_lineal():
 
     with open(filename, "wb") as audio_file:
         audio_file.write(audio_data.content)
+    print("donde")
 
     query_vector = get_spectrogram_audio(filename, "temp_image.png")
     K = 8

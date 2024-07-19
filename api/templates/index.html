@@ -83,12 +83,14 @@
     <!-- SECCION DE AUDIO RETRIEVAL -->
     <div id="audiogeneral">
       <div class="side">
-        <input type="file" name="audio-consulta" id="audio-consulta" accept="audio/*" />
-        <label for="audio-consulta">
-          Subir archivo
-        </label>
-        <br>
-        <button onclick="fetchSounds()">Consultar</button>
+        <form enctype="multipart/form-data">
+          <input type="file" name="audio-consulta" id="audio-consulta" accept="audio/*" />
+          <label for="audio-consulta">
+            Subir archivo
+          </label>
+          <br><br><br>
+          <button onclick="fetchSounds()">Consultar</button>
+        </form>
       </div>
       <div class="side sec-side">
         <label for="audio-tecnica">
@@ -155,16 +157,17 @@
       const selRetrieval = $("#sel-retrieval");
       selRetrieval.addEventListener("change", () => {
         const value = selRetrieval.querySelector("input:checked").value;
+        localStorage.setItem("load", value === "letters-db" ? "general" : "audiogeneral");
         if (value === "letters-db") {
           general.style.display = "flex";
           audiogeneral.style.display = "none";
         } else {
-          restart();
           general.style.display = "none";
           audiogeneral.style.display = "flex";
           const input = $id("audio-consulta");
           const label = $("label[for='audio-consulta']");
           input.addEventListener("change", (e) => {
+            e.preventDefault();
             const fileName = e.target.files[0].name;
             label.textContent = fileName;
           });
