@@ -4,7 +4,7 @@
   letter-spacing: 0.5px;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: #1db954;
   background-color: #242424;
 }
 
@@ -18,8 +18,8 @@ textarea, input, select, button {
 
 textarea:focus, input:focus, select:focus, button:focus {
   outline: none;
-  border-color: #007BFF;
-  box-shadow: 0 0 5px rgba(0,123,255,0.5);
+  border-color: #1ed760;
+  box-shadow: 0 0 5px #1db954;
 }
 
 textarea {
@@ -50,7 +50,8 @@ label {
 #sel-retrieval {
   display: flex;
   justify-content: space-around;
-  margin-top: 1rem;
+  margin-top: 1.7rem;
+  gap: 10px;
 }
 
 #sel-retrieval div {
@@ -58,11 +59,33 @@ label {
   gap: 1rem;
 }
 
+#sel-retrieval input[type="radio"] {
+  display: none;
+}
+
+#sel-retrieval label {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#sel-retrieval input[type="radio"]:checked + label {
+  background-color: #1ed760;
+  color: white;
+  border-color: #1ed760;
+}
+
+#sel-retrieval label:hover {
+  background-color: #f0f0f0;
+}
+
 #general {
   width: 850px;
   margin: 2rem auto;
   display: flex;
-  color: rgb(189, 221, 189);
+  color: #1ed760;
   align-items: flex-start;
   /* justify-content: center; */
   flex-direction: row;
@@ -82,18 +105,30 @@ label {
   width: 400px;
   height: 100%;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 0.9rem;
 }
 
+
+
 .sec-side {
-  gap: 0.8rem;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.sec-side label {
+  font-weight: bold;
+    font-size: 1.2rem;
+}
+
+
 
 #audiogeneral {
   width: 850px;
   margin: 2rem auto;
   display: none;
-  color: rgb(189, 221, 189);
+  color: #1ed760;
   align-items: flex-start;
   /* justify-content: center; */
   flex-direction: row;
@@ -165,11 +200,24 @@ button {
   width: 100%;
   border-radius: 0.25rem;
   padding: 0.6rem 1rem;
-  background-color: #007BFF;
+  background-color: #1ed760;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
+.side button {
+  padding: 10px 10px;
+  border: none;
+  background-color: #1db954;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: bold; /* Texto en negrita */
+  font-size: 1.1rem; /* Tamaño de letra más grande */
+}
+
 
 #box-atras {
   display: none;
@@ -186,7 +234,7 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #1ed760;
 }
 
 /* Modal */
@@ -257,6 +305,13 @@ button:hover {
   filter: drop-shadow(0 0 0.75rem white);
 }
 
+h1 {
+  text-align: center;
+  font-size: 3rem;
+  color: #1db954;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
 
 /* Table */
 
@@ -301,6 +356,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+
+
 
 #app {
   max-width: 1280px;

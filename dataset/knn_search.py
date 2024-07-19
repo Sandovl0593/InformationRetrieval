@@ -1,67 +1,50 @@
-# Luego de ejecutar el "distance_analysis.py" ejecutar el "knn_search.py" <- (2)
 import pandas as pd
+import os
 import numpy as np
-from heapq import heappush, heappop
-import ast  # Para una conversión segura de strings a listas
-import re
-import librosa
+from rtree import index
 
-# Función para convertir una cadena de MFCC_Vector en un vector numpy
-def parse_mfcc_vector(mfcc_string):
-    # Reemplazar caracteres innecesarios y añadir comas
-    mfcc_string = re.sub(r'(\d)\s+([-]?\d)', r'\1,\2', mfcc_string.replace('\n', ' '))
-    return np.array(ast.literal_eval(mfcc_string))
+class RtreeKNN:
+    def init(self, data, index_name, dimension, m):
+        p = index.Property()
+        p.dimension = dimension
+        p.dat_extension = 'data'
+        p.idx_extension = 'index'
+        p.buffering_capacity = m
 
-# Función para calcular la distancia euclidiana
-def euclidean_distance(vector1, vector2):
-    return np.linalg.norm(vector1 - vector2)
+        data_file = f'{index_name}.data'
+        index_file = f'{index_name}.index'
+        if os.path.exists(data_file):
+            os.remove(data_file)
+            print(f"Removed existing data file: {data_file}")
+        if os.path.exists(index_file):
+            os.remove(index_file)
+            print(f"Removed existing index file: {index_file}")
 
-# Busqueda KNN con cola de prioridad
-def knn_search(query_vector, data, K):
-    priority_queue = []
-    for index, row in data.iterrows():
-        distance = euclidean_distance(query_vector, row['MFCC_Vector'])
-        heappush(priority_queue, (-distance, (index, row)))  # Usar distancia negativa para heappop más cercano
-        if len(priority_queue) > K:
-            heappop(priority_queue)
+        self.idx = index.Index(index_name, properties=p)
 
-    # Recolectar y retornar los K vecinos más cercanos
-    neighbors = []
-    while priority_queue:
-        neighbors.append(heappop(priority_queue))
-    return neighbors[::-1]
+        if data is not None:
+            self.data = data
+            self._build_index()
 
-# Función para extraer los vectores caracteristicos (MFCC) de un archivo de audio
-def extract_features(audio_file):
-    y, sr = librosa.load(audio_file)
-    mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=20)
-    mfccs_mean = np.mean(mfccs, axis=1)
-    return mfccs_mean
+    def _build_index(self):
+        for i in range(len(self.data)):
+            point = tuple(self.data.iloc[i])
+            bounding_box = point + point
+            self.idx.insert(i, bounding_box)
 
-# Cargar datos
-df = pd.read_csv('complete_spotify_with_mfcc.csv')
+    def knn_search(self, query_vector, K):
+        query_point = tuple(query_vector)
+        bounding_box = query_point + query_point
+        neighbors = list(self.idx.nearest(bounding_box, K, objects=True))
 
-# Convertir MFCC_Vector de cadena a array de numpy
-df['MFCC_Vector'] = df['MFCC_Vector'].apply(parse_mfcc_vector)
+        # Calculate Euclidean distance for each neighbor
+        def euclidean_distance(point1, point2):
+            return np.sqrt(np.sum((np.array(point1) - np.array(point2)) ** 2))
 
-# Vector de consulta
-#query_vector = df.iloc[0]['MFCC_Vector']
+        result = []
+        for neighbor in neighbors:
+            point = tuple(self.data.iloc[neighbor.id])
+            distance = euclidean_distance(query_point, point)
+            result.append((neighbor.id, distance))
 
-# Vector de consulta desde un archivo de audio
-audio_file = 'downloaded_audio/_TOMMYPAMELA_PesoPlumaKeniaOS.mp3'
-query_vector = extract_features(audio_file)
-
-# Validación de las estructuras de todos los vectores MFCC
-for index, row in df.iterrows():
-    vector = row['MFCC_Vector']
-    if vector.shape != query_vector.shape:
-        print(f"Row {index} has a vector of different shape: {vector.shape}")
-
-# Buscar los K vecinos más cercanos
-K = 3
-neighbors = knn_search(query_vector, df, K)
-
-# Imprimiendo resultados
-for neg_dist, (index, neighbor) in neighbors:
-    dist = -neg_dist  # Reconvertir la distancia a positiva
-    print(f"Distance: {dist}, Track: {neighbor['track_name']}, Artist: {neighbor['track_artist']}")
+        return result

@@ -13,18 +13,20 @@
   <script src="{{ url_for('static', filename='index.js') }}" type="text/javascript"></script>
   <div id="app">
     <!-- <div>Information</div> -->
-    <h1>GUI Multimedia Database</h1>
+    <h1>SongMatch</h1>
 
     <div id="box-sel-ret">
       <strong>
-        Tipo de recuperación
+        Tipo de Recuperación
       </strong>
       <div id="sel-retrieval">
         <div>
-          <input type="radio" name="retrieval" value="letters-db" checked>Letras de canciones
+            <input type="radio" id="letters-db" name="retrieval" value="letters-db" checked>
+            <label for="letters-db">Letras de canciones</label>
         </div>
         <div>
-          <input type="radio" name="retrieval" value="audios-api">Audios de canciones
+            <input type="radio" id="audios-api" name="retrieval" value="audios-api">
+            <label for="audios-api">Audios de canciones</label>
         </div>
       </div>
     </div>
@@ -33,7 +35,7 @@
     <div id="general">
       <div class="side">
         <label for="inp-consulta">
-          Ingresa consulta
+          Ingresar Consulta
         </label>
         <textarea type="text" name="Ingresa consulta" id="inp-consulta" wrap="hard"></textarea>
         <button onclick="fetchLines()">Consultar</button>
@@ -47,7 +49,7 @@
           Técnica
         </label>
         <select name="tecnica" id="inp-tecnica">
-          <option value="manual">Manual</option>
+          <option value="manual">Implementación Propia</option>
           <option value="postgres">PostgreSQL</option>
         </select>
         <label for="inp-rows">
@@ -97,9 +99,9 @@
           Técnica
         </label>
         <select name="tecnica" id="audio-tecnica">
-          <option value="secuencial">Secuencial</option>
-          <option value="rtree">RTree</option>
-          <option value="rtreehighd">RTreeHighD</option>
+          <option value="secuencial">KNN - Secuencial</option>
+          <option value="rtree">KNN - RTree</option>
+          <option value="rtreehighd">KNN - HighD</option>
         </select>
         <!-- <label for="audio-modo">
           Tipo de búsqueda
