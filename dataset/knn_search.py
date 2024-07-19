@@ -1,50 +1,36 @@
-import pandas as pd
-import os
 import numpy as np
-from rtree import index
+import pandas as pd
+from heapq import heappush, heappop
 
-class RtreeKNN:
-    def init(self, data, index_name, dimension, m):
-        p = index.Property()
-        p.dimension = dimension
-        p.dat_extension = 'data'
-        p.idx_extension = 'index'
-        p.buffering_capacity = m
 
-        data_file = f'{index_name}.data'
-        index_file = f'{index_name}.index'
-        if os.path.exists(data_file):
-            os.remove(data_file)
-            print(f"Removed existing data file: {data_file}")
-        if os.path.exists(index_file):
-            os.remove(index_file)
-            print(f"Removed existing index file: {index_file}")
+# Función para calcular la distancia euclidiana entre dos vectores:
+def euclidean_distance(vector1, vector2):
+    # Calcula y retorna la norma (distancia euclidiana)
+    return np.linalg.norm(vector1 - vector2)
 
-        self.idx = index.Index(index_name, properties=p)
+# Función para realizar la búsqueda KNN usando una cola de prioridad:
+def knn_lineal_search(query_vector, data, K):
+    # Inicializa una lista vacía que actuará como cola de prioridad
+    priority_queue = []
+    # Itera sobre cada fila del DataFrame
+    for index, row in data.iterrows():
+        # Toma todos los valores de la fila excepto el último
+        vector = row[:-1].values
+        # Calcula la distancia euclidiana al vector de consulta
+        distance = euclidean_distance(query_vector, vector)
+        # Inserta la distancia negativa y la fila en la cola
+        heappush(priority_queue, (-distance, (index, row)))
+        # Si la cola tiene más de K elementos
+        if len(priority_queue) > K:
+            # Elimina el elemento con la mayor distancia (mínimo en la cola de distancias negativas)
+            heappop(priority_queue)
 
-        if data is not None:
-            self.data = data
-            self._build_index()
-
-    def _build_index(self):
-        for i in range(len(self.data)):
-            point = tuple(self.data.iloc[i])
-            bounding_box = point + point
-            self.idx.insert(i, bounding_box)
-
-    def knn_search(self, query_vector, K):
-        query_point = tuple(query_vector)
-        bounding_box = query_point + query_point
-        neighbors = list(self.idx.nearest(bounding_box, K, objects=True))
-
-        # Calculate Euclidean distance for each neighbor
-        def euclidean_distance(point1, point2):
-            return np.sqrt(np.sum((np.array(point1) - np.array(point2)) ** 2))
-
-        result = []
-        for neighbor in neighbors:
-            point = tuple(self.data.iloc[neighbor.id])
-            distance = euclidean_distance(query_point, point)
-            result.append((neighbor.id, distance))
-
-        return result
+    # Recolecta y retorna los K vecinos más cercanos
+    # Lista para almacenar los vecinos más cercanos
+    neighbors = []
+    # Mientras hayan elementos en la cola
+    while priority_queue:
+        # Extrae los elementos de la cola y los añade a la lista de vecinos
+        neighbors.append(heappop(priority_queue))
+    # Retorna la lista de vecinos en orden de menor a mayor distancia
+    return neighbors[::-1]
