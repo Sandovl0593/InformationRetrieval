@@ -11,3 +11,4 @@ dataset/songs*.csv
 dataset/spotify*.csv
 dataset/document_songs.csv
 dataset/downloaded_audio/
+dataset/mel_spectrogramsEND.csv

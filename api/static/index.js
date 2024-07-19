@@ -154,7 +154,7 @@ function fetchSounds() {
   if (!audio) return; // empty query -> do nothing
 
   displayLoadingModal();
-  const tecnica = $id("audio-tecnica").value;
+  // const tecnica = $id("audio-tecnica").value;
   const modo = $id("audio-modo").value;
 
   const formData = new FormData();
@@ -162,21 +162,11 @@ function fetchSounds() {
   formData.append("filename", filename);
 
   const routes = {
-    secuencial: {
-      nearest: "/api/audio/knn/lineal",
-      range: "/api/audio/range/lineal",
-    },
-    rtree: {
-      nearest: "/api/audio/knn/rtree",
-      range: "/api/audio/range/rtree",
-    },
+    secuencial: "/api/audio/knn/lineal",
+    rtree: "/api/audio/knn/rtree",
+    highD: "api/audio/knn/rtreehighd",
   };
-  const fetchRoute =
-    tecnica === "rtreehighd"
-      ? "api/audio/knn/rtreehighd"
-      : routes[tecnica][modo];
-
-  console.log(fetchRoute);
+  const fetchRoute = routes[modo];
 
   fetch(fetchRoute, {
     method: "POST",
@@ -195,12 +185,12 @@ function fetchSounds() {
         const songName = document.createElement("h3");
         songName.textContent = item.name;
 
-        const audioElement = document.createElement("audio");
-        audioElement.setAttribute("controls", "");
-        audioElement.setAttribute("src", item.url);
+        // const audioElement = document.createElement("audio");
+        // audioElement.setAttribute("controls", "");
+        // audioElement.setAttribute("src", item.url);
 
         audioContainer.appendChild(songName);
-        audioContainer.appendChild(audioElement);
+        // audioContainer.appendChild(audioElement);
         audioList.appendChild(audioContainer);
       });
       hideTipo();
