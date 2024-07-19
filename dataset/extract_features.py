@@ -51,7 +51,13 @@ def extract_audio_features(playlist_df):
 
 # Cargando el dataset
 playlist_df = pd.read_csv('playlist_tracks.csv')
-features_df = extract_audio_features(playlist_df)
+# select random rows to fill 1000 rows
+playlist_dfff = playlist_df.sample(n=1000, random_state=42)
+# download the reduced dataset
+playlist_dfff.to_csv('reduced_playlist_tracks.csv', index=False)
+# por temas de tiempo
+
+features_df = extract_audio_features(playlist_dfff)
 
 mfcc_columns = [f"MFCC{i}" for i in range(1, 21)]
 features_df['MFCC_Vector'] = features_df[mfcc_columns].apply(lambda row: row.tolist(), axis=1)

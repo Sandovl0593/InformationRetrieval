@@ -24,7 +24,7 @@ class InvertedIndex:
     def text_to_terms(self, text):
         words = word_tokenize(text.lower())
         words = [
-            self.stemmer_en.stem(''.join(e for e in word if e.isalnum())) if word not in stopwords.words('spanish') else self.stemmer_es.stem(word)
+            self.stemmer_en.stem(word) if word not in stopwords.words('spanish') else self.stemmer_es.stem(word)
             for word in words if word.isalnum() and word not in self.stop_words
         ]
         return words
@@ -41,7 +41,7 @@ class InvertedIndex:
         # archivo propio
         for term, postings in dictionary.items():
             if postings:
-                output_file = f"temp/{term}_block_{block_num}.json"
+                output_file = f"{term}_block_{block_num}.json"
                 with open(output_file, 'w') as f:
                     json.dump(postings, f)
                 self.term_to_files[term].append(output_file)

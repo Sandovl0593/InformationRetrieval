@@ -23,14 +23,14 @@ class TextPreprocessor:
     def concatenate_fields(self):
         # Concatenar campos textuales en un solo texto por fila usando "@" como separador
         self.data['text'] = self.data.apply(lambda row: ' @ '.join([
-            str(row['track_name']),
-            str(row['track_artist']),
-            str(row['lyrics']),
-            str(row['track_album_name']),
-            str(row['playlist_name']),
-            str(row['playlist_genre']),
-            str(row['playlist_subgenre']),
-            str(row['language'])
+            ''.join(e for e in str(row['track_name']) if e.isalnum() or e == ' '),
+            ''.join(e for e in str(row['track_artist']) if e.isalnum() or e == ' '),
+            ''.join(e for e in str(row['lyrics']) if e.isalnum() or e == ' '),
+            ''.join(e for e in str(row['track_album_name']) if e.isalnum() or e == ' '),
+            ''.join(e for e in str(row['playlist_name']) if e.isalnum() or e == ' '),
+            ''.join(e for e in str(row['playlist_genre']) if e.isalnum() or e == ' '),
+            ''.join(e for e in str(row['playlist_subgenre']) if e.isalnum() or e == ' '),
+            ''.join(e for e in str(row['language']) if e.isalnum() or e == ' ')
         ]), axis=1)
 
     def tokenize(self, text):

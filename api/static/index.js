@@ -116,6 +116,7 @@ function fetchLines() {
         }
         tbody.appendChild(tr);
       });
+      hideTipo();
       hideForm();
       const durationTime = $id("duration-time");
       durationTime.textContent = json.time + " ms";
@@ -124,7 +125,18 @@ function fetchLines() {
     });
 }
 
+function hideTipo() {
+  const tipo = $("#box-sel-ret");
+  tipo.style.display = "none";
+}
+
+function showTipo() {
+  const tipo = $("#box-sel-ret");
+  tipo.style.display = "block";
+}
+
 function restart() {
+  showTipo();
   displayForm();
   // reset table
   const table = $("table");
@@ -138,6 +150,7 @@ function restart() {
 
 function fetchSounds() {
   const audio = $id("audio-consulta").files[0];
+  const filename = audio.name;
   if (!audio) return; // empty query -> do nothing
 
   displayLoadingModal();
@@ -146,6 +159,7 @@ function fetchSounds() {
 
   const formData = new FormData();
   formData.append("audio", audio);
+  formData.append("filename", filename);
 
   const routes = {
     secuencial: {
@@ -162,20 +176,34 @@ function fetchSounds() {
       ? "api/audio/knn/rtreehighd"
       : routes[tecnica][modo];
 
+  console.log(fetchRoute);
+
   fetch(fetchRoute, {
     method: "POST",
     body: formData,
   })
-    .then((response) => response.blob())
-    .then((blob) => {
+    .then((response) => response.json())
+    .then((json) => {
       hideLoadingModal();
-      const audio = document.createElement("audio");
-      audio.controls = true;
-      audio.src = URL.createObjectURL(blob);
-      const audioDiv = $id("audio-div");
-      audioDiv.innerHTML = "";
-      audioDiv.appendChild(audio);
+      const result = json.result;
+      const audioList = document.getElementById("audio-list");
 
+      result.forEach((item) => {
+        const audioContainer = document.createElement("div");
+        audioContainer.classList.add("audio-container");
+
+        const songName = document.createElement("h3");
+        songName.textContent = item.name;
+
+        const audioElement = document.createElement("audio");
+        audioElement.setAttribute("controls", "");
+        audioElement.setAttribute("src", item.url);
+
+        audioContainer.appendChild(songName);
+        audioContainer.appendChild(audioElement);
+        audioList.appendChild(audioContainer);
+      });
+      hideTipo();
       hideForm();
       const durationTime = $id("duration-time");
       durationTime.textContent = json.time + " ms";
